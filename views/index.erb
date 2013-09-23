@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>Photo Frame</title>
+  <link rel="stylesheet" type="text/css" href="app.css">
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript">
+    IMAGES = <%= @images.to_json %>;
+  </script>
+</head>
+<body>
+  <div id="photo-frame"></div>
+</body>
+</html>
