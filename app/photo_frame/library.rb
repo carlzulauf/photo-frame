@@ -26,5 +26,10 @@ class PhotoFrame
         Base64.urlsafe_encode64 file.encrypt(key: PhotoFrame.config.secret)
       end
     end
+
+    def secure_fetch(secure_path)
+      encrypted_path = Base64.urlsafe_decode64( secure_path )
+      send_file encrypted_path.decrypt(key: PhotoFrame.config.secret)
+    end
   end
 end

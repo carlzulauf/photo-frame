@@ -11,7 +11,7 @@ class PhotoFrame
     end
 
     get '/fetch' do
-      binding.pry
+      secure_fetch params[:file]
     end
   end
 end

@@ -10,5 +10,8 @@
 </head>
 <body>
   <div id="photo-frame"></div>
+  <% @images.each do |image| %>
+    <a href="/fetch?file=<%= image %>"><%= image[0..8] %>...</a>
+  <% end %>
 </body>
 </html>
