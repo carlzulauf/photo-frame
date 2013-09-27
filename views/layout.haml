@@ -1,0 +1,9 @@
+%html
+  %head
+    %title Photo Frame
+    %link{rel: "stylesheet", type: "text/css", href: stylesheet_path('app')}
+    %script{type: "text/javascript", src: javascript_path('app')}
+    %script{type: "text/javascript"}
+      = "IMAGES = #{@images.to_json};"
+  %body
+    = yield

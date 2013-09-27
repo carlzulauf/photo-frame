@@ -9,7 +9,7 @@ class PhotoFrame
 
     get '/' do
       @images = secure_files
-      erb :index
+      haml :index
     end
 
     get '/fetch' do
