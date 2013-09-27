@@ -1,7 +1,8 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app'))
 
+Bundler.require
+
 require 'json'
-require 'encryptor'
 require 'photo_frame'
 require 'pry'
 

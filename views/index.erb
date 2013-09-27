@@ -1,9 +1,9 @@
 <html>
 <head>
   <title>Photo Frame</title>
-  <link rel="stylesheet" type="text/css" href="app.css">
+  <link rel="stylesheet" type="text/css" href="<%= stylesheet_path 'app' %>">
   <script type="text/javascript" src="jquery.min.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="<%= javascript_path 'app' %>"></script>
   <script type="text/javascript">
     IMAGES = <%= @images.to_json %>;
   </script>

@@ -5,6 +5,8 @@ class PhotoFrame
 
     include Library
 
+    register Sinatra::AssetPipeline
+
     get '/' do
       @images = secure_files
       erb :index
