@@ -14,11 +14,12 @@ class PhotoFrame
     end
 
     def all_files
-      path_files.select do |file|
+      files = path_files.select do |file|
         PhotoFrame.config.patterns.any? do |pattern|
           file =~ pattern
         end
       end
+      PhotoFrame.config.shuffle ? files.shuffle : files
     end
 
     def secure_files

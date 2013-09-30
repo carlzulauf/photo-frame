@@ -69,4 +69,4 @@ class PhotoFrame.Images
     $img
 
   startTimer: ->
-    @timer = window.setInterval (=> @loadNext() ), 10000
+    @timer = window.setInterval (=> @loadNext() ), 16000
