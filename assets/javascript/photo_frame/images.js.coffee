@@ -1,15 +1,22 @@
 class PhotoFrame.Images
   constructor: () ->
     @images = []
+    @prefix = "http://carl.linkleaf.com:9292"
     @path = "/fetch/"
     @$frame = $("#photo-frame")
     @preloadTarget = 3
-    @loaded = []
     @loadImages()
+    @$frame.click =>
+      @click()
     window.setTimeout (=> @loadNext(); @startTimer() ), 1000
 
+  click: ->
+    @stopTimer()
+    @loadNext()
+    @startTimer()
+
   loadImages: ->
-    $.getJSON "/photos.json", (data) =>
+    $.getJSON @prefix + "/photos.json?callback=?", (data) =>
       images = data.photos
       @images.each (token) =>
         images.push token
@@ -58,10 +65,13 @@ class PhotoFrame.Images
     $img.addClass("current")
     @preload()
 
-  createImg: (file) ->
+  createImg: (info) ->
     $img = $( document.createElement('img') )
-    $img.attr("src", @path + file)
+    $img.attr("src", @prefix + @path + info.token)
     $img
 
   startTimer: ->
     @timer = window.setInterval (=> @loadNext() ), 16000
+
+  stopTimer: ->
+    window.clearInterval(@timer)
