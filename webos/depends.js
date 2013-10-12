@@ -1,3 +1,5 @@
 enyo.depends(
-  "source/PhotoFrame.js"
+  "source/vendor.js",
+  "source/PhotoFrame.js",
+  "source/app.css"
 );

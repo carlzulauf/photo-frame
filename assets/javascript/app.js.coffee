@@ -9,3 +9,5 @@ window.PhotoFrame = PhotoFrame;
 
 $ =>
   window.photos = new PhotoFrame()
+  if enyo and enyo.setFullScreen
+    enyo.setFullScreen(true);
