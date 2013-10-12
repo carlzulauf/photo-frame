@@ -1,0 +1,10 @@
+{
+  "id": "com.carlzulauf.photoframe",
+  "version": "0.1.0",
+  "vendor": "Carl Zulauf",
+  "type": "web",
+  "main": "index.html",
+  "title": "Photo Frame",
+  "icon": "icon.png",
+  "uiRevision": 2
+}
