@@ -1,3 +1,3 @@
-class Photo < PhotoFrame::Model
+class Photo < ActiveRecord::Base
 
 end

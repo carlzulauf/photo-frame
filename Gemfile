@@ -11,6 +11,8 @@ gem "haml"
 
 gem "encryptor"
 
+gem "progressbar"
+
 group :development do
   gem "pry-byebug"
 end

@@ -6,6 +6,7 @@ require 'json'
 require 'securerandom'
 require 'photo_frame'
 require 'pry'
+require 'progressbar'
 require 'sinatra/activerecord'
 
 PhotoFrame.config do |config|
