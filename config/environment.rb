@@ -20,6 +20,7 @@ end
 PhotoFrame::Server.configure do |c|
   c.views = PhotoFrame.root.join("views")
   c.public_folder = PhotoFrame.root.join("public")
+  c.assets_precompile = %w(app.js app.css vendor.js vendor.css *.png *.jpg *.svg *.eot *.ttf *.woff)
 end
 
 DB_CONFIG = YAML.load_file PhotoFrame.root.join("config", "database.yml")

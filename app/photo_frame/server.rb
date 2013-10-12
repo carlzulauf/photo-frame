@@ -7,12 +7,16 @@ class PhotoFrame
     register Sinatra::ActiveRecordExtension
 
     get '/' do
-      @images = secure_files
       haml :index
     end
 
-    get '/fetch' do
-      secure_fetch params[:file]
+    get '/photos.json' do
+      {photos: Photo.random.limit(100).map(&:token)}.to_json
+    end
+
+    get '/fetch/:token' do
+      photo = Photo.where(token: params[:token]).first
+      send_file photo.path
     end
   end
 end

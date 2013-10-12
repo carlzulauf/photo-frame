@@ -1,31 +1,26 @@
 class PhotoFrame.Images
-  constructor: (@images) ->
-    @path = "/fetch?file="
-    @current = 0
+  constructor: () ->
+    @images = []
+    @path = "/fetch/"
     @$frame = $("#photo-frame")
+    @preloadTarget = 3
     @loaded = []
-    @preload(3)
+    @loadImages()
     window.setTimeout (=> @loadNext(); @startTimer() ), 1000
 
-  nextIdx: (from = @current) ->
-    next = from + 1
-    next = 0 if next >= @images.length
-    next
-
-  nextIdxs: (n = 1, from = @current) ->
-    ids = []
-    last = from
-    n.times =>
-      last = @nextIdx(last)
-      ids.push last
-    ids
+  loadImages: ->
+    $.getJSON "/photos.json", (data) =>
+      images = data.photos
+      @images.each (token) =>
+        images.push token
+      @images = images
+      @preload()
 
   next: ->
-    idx = @nextIdx()
-    @current = idx
-    @images[idx]
+    @images.pop()
 
-  preload: (n = 1) ->
+  preload: ->
+    n = @preloadTarget - @$frame.find("img").length
     n.times =>
       @$frame.append @createImg(@next())
 
@@ -39,7 +34,7 @@ class PhotoFrame.Images
           @showImg $next
           $last.remove()
       }
-    else
+    else if $next.length > 0
       @showImg $next
 
   showImg: ($img) ->
@@ -61,7 +56,7 @@ class PhotoFrame.Images
       duration: 300
     }
     $img.addClass("current")
-    @preload 1
+    @preload()
 
   createImg: (file) ->
     $img = $( document.createElement('img') )

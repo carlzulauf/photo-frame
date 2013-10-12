@@ -2,10 +2,10 @@
 #= require_tree ./photo_frame
 
 class PhotoFrame
-  constructor: (images) ->
-    @images = new PhotoFrame.Images(images)
+  constructor: () ->
+    @images = new PhotoFrame.Images()
 
 window.PhotoFrame = PhotoFrame;
 
 $ =>
-  window.photos = new PhotoFrame(IMAGES)
+  window.photos = new PhotoFrame()

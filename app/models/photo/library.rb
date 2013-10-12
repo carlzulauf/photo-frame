@@ -8,8 +8,9 @@ class Photo::Library
   end
 
   def rebuild
-    Photo.delete_all
-    build
+    build do
+      Photo.delete_all
+    end
   end
 
   def build
@@ -17,6 +18,7 @@ class Photo::Library
     puts "Processing #{all_files.count} files..."
     progress = ProgressBar.new("Photos", all_files.count)
     Photo.transaction do
+      yield if block_given?
       all_files.each do |file|
         progress.inc
         Photo.create!(
@@ -33,9 +35,7 @@ class Photo::Library
     all = []
     paths.each do |path_pattern|
       Dir.glob(path_pattern).each do |file|
-        if patterns.empty? || patterns.any?{ |p| file =~ p }
-          all << file
-        end
+        all << file if patterns.empty? || patterns.any?{ |p| file =~ p }
       end
     end
     all
