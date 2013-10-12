@@ -3,8 +3,10 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'app'))
 Bundler.require
 
 require 'json'
+require 'securerandom'
 require 'photo_frame'
 require 'pry'
+require 'sinatra/activerecord'
 
 PhotoFrame.config do |config|
   config.paths << "/home/carl/Pictures/**/*"
@@ -18,3 +20,6 @@ PhotoFrame::Server.configure do |c|
   c.views = PhotoFrame.root.join("views")
   c.public_folder = PhotoFrame.root.join("public")
 end
+
+DB_CONFIG = YAML.load_file PhotoFrame.root.join("config", "database.yml")
+$database = ActiveRecord::Base.establish_connection(DB_CONFIG)

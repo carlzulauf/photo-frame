@@ -1,4 +1,9 @@
 require './config/environment'
 require 'sinatra/asset_pipeline/task.rb'
+require "sinatra/activerecord/rake"
 
 Sinatra::AssetPipeline::Task.define! PhotoFrame::Server
+
+task :pry do
+  binding.pry
+end

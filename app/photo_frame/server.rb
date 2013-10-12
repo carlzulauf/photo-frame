@@ -1,11 +1,10 @@
-require 'sinatra/base'
-
 class PhotoFrame
   class Server < Sinatra::Base
 
     include Library
 
     register Sinatra::AssetPipeline
+    register Sinatra::ActiveRecordExtension
 
     get '/' do
       @images = secure_files
