@@ -4,7 +4,9 @@ class PhotoFrame.Images
     @prefix = "http://carl.linkleaf.com:9292"
     @path = "/fetch/"
     @$frame = $("#photo-frame")
+    @$name = $("#photo-name")
     @preloadTarget = 3
+    @showName = false
     @loadImages()
     @$frame.click =>
       @click()
@@ -12,6 +14,7 @@ class PhotoFrame.Images
 
   click: ->
     @stopTimer()
+    @showName = true
     @loadNext()
     @startTimer()
 
@@ -43,6 +46,7 @@ class PhotoFrame.Images
       }
     else if $next.length > 0
       @showImg $next
+    $next
 
   showImg: ($img) ->
     w = $(window).width()
@@ -62,12 +66,18 @@ class PhotoFrame.Images
     $img.fadeIn {
       duration: 300
     }
+    if @showName
+      @$name.fadeIn {duration: 300}
+      @showName = false
+    else
+      @$name.hide()
     $img.addClass("current")
     @preload()
 
   createImg: (info) ->
     $img = $( document.createElement('img') )
     $img.attr("src", @prefix + @path + info.token)
+    @$name.text info.path
     $img
 
   startTimer: ->

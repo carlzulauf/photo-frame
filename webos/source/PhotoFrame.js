@@ -15,8 +15,11 @@
 
   $(function() {
     window.photos = new PhotoFrame();
-    if (enyo && enyo.setFullScreen) {
-      return enyo.setFullScreen(true);
+    if (window.enyo && window.enyo.setFullScreen) {
+      enyo.setFullScreen(true);
+      return enyo.windows.setWindowProperties({
+        blockScreenTimeout: true
+      });
     }
   });
 
@@ -29,7 +32,9 @@
       this.prefix = "http://carl.linkleaf.com:9292";
       this.path = "/fetch/";
       this.$frame = $("#photo-frame");
+      this.$name = $("#photo-name");
       this.preloadTarget = 3;
+      this.showName = false;
       this.loadImages();
       this.$frame.click(function() {
         return _this.click();
@@ -42,6 +47,7 @@
 
     Images.prototype.click = function() {
       this.stopTimer();
+      this.showName = true;
       this.loadNext();
       return this.startTimer();
     };
@@ -78,7 +84,7 @@
       $last = this.$frame.find("img.current").first();
       $next = this.$frame.find("img:not(.current)").first();
       if ($last.length > 0) {
-        return $last.fadeOut({
+        $last.fadeOut({
           duration: 500,
           complete: function() {
             _this.showImg($next);
@@ -86,8 +92,9 @@
           }
         });
       } else if ($next.length > 0) {
-        return this.showImg($next);
+        this.showImg($next);
       }
+      return $next;
     };
 
     Images.prototype.showImg = function($img) {
@@ -114,6 +121,14 @@
       $img.fadeIn({
         duration: 300
       });
+      if (this.showName) {
+        this.$name.fadeIn({
+          duration: 300
+        });
+        this.showName = false;
+      } else {
+        this.$name.hide();
+      }
       $img.addClass("current");
       return this.preload();
     };
@@ -122,6 +137,7 @@
       var $img;
       $img = $(document.createElement('img'));
       $img.attr("src", this.prefix + this.path + info.token);
+      this.$name.text(info.path);
       return $img;
     };
 

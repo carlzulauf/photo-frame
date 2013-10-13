@@ -9,5 +9,6 @@ window.PhotoFrame = PhotoFrame;
 
 $ =>
   window.photos = new PhotoFrame()
-  if enyo and enyo.setFullScreen
+  if window.enyo and window.enyo.setFullScreen
     enyo.setFullScreen(true);
+    enyo.windows.setWindowProperties {blockScreenTimeout: true}
