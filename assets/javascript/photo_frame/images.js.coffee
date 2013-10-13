@@ -27,6 +27,7 @@ class PhotoFrame.Images
       @preload()
 
   next: ->
+    @loadImages() if @images.length < 10
     @images.pop()
 
   preload: ->
@@ -49,20 +50,6 @@ class PhotoFrame.Images
     $next
 
   showImg: ($img) ->
-    w = $(window).width()
-    h = $(window).height()
-    ar = w / h # window aspect ratio
-    iw = $img.width()
-    ih = $img.height()
-    iar = iw / ih # image aspect ratio
-    if iar > ar
-      top = Math.round( (h - ( w / iar )) / 2 )
-      $img.width w
-      $img.css {"margin-top": top + "px"}
-    else
-      left = Math.round( (w - ( h * iar )) / 2 )
-      $img.height h
-      $img.css {"margin-left": left + "px"}
     $img.fadeIn {
       duration: 300
     }
@@ -75,8 +62,10 @@ class PhotoFrame.Images
     @preload()
 
   createImg: (info) ->
+    w = $(window).width()
+    h = $(window).height()
     $img = $( document.createElement('img') )
-    $img.attr("src", @prefix + @path + info.token)
+    $img.attr("src", @prefix + @path + info.token + "?width=" + w + "&height=" + h)
     @$name.text info.path
     $img
 
