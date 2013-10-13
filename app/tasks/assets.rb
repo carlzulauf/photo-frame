@@ -14,6 +14,17 @@ class PhotoFrame
             # manifest.compile(app.assets_precompile)
             binding.pry
           end
+
+          desc "Compile assets to webos app"
+          task :webos do
+            environment = app.sprockets
+            app     = PhotoFrame.root.join("webos", "source", "PhotoFrame.js")
+            vendor  = PhotoFrame.root.join("webos", "source", "vendor.js")
+            css     = PhotoFrame.root.join("webos", "css", "app.css")
+            environment[ "app.js"    ].write_to app
+            environment[ "vendor.js" ].write_to vendor
+            environment[ "app.css"   ].write_to css
+          end
         end
       end
 

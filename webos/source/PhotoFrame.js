@@ -66,6 +66,9 @@
     };
 
     Images.prototype.next = function() {
+      if (this.images.length < 10) {
+        this.loadImages();
+      }
       return this.images.pop();
     };
 
@@ -98,26 +101,6 @@
     };
 
     Images.prototype.showImg = function($img) {
-      var ar, h, iar, ih, iw, left, top, w;
-      w = $(window).width();
-      h = $(window).height();
-      ar = w / h;
-      iw = $img.width();
-      ih = $img.height();
-      iar = iw / ih;
-      if (iar > ar) {
-        top = Math.round((h - (w / iar)) / 2);
-        $img.width(w);
-        $img.css({
-          "margin-top": top + "px"
-        });
-      } else {
-        left = Math.round((w - (h * iar)) / 2);
-        $img.height(h);
-        $img.css({
-          "margin-left": left + "px"
-        });
-      }
       $img.fadeIn({
         duration: 300
       });
@@ -134,9 +117,11 @@
     };
 
     Images.prototype.createImg = function(info) {
-      var $img;
+      var $img, h, w;
+      w = $(window).width();
+      h = $(window).height();
       $img = $(document.createElement('img'));
-      $img.attr("src", this.prefix + this.path + info.token);
+      $img.attr("src", this.prefix + this.path + info.token + "?width=" + w + "&height=" + h);
       this.$name.text(info.path);
       return $img;
     };
