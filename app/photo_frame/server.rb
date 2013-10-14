@@ -16,7 +16,7 @@ class PhotoFrame
           token: photo.token
         }
       end
-      jsonp({photos: photos})
+      jsonp({photos: photos.map{|p| {path: p.path, token: p.token} }})
     end
 
     get '/fetch/:token' do
