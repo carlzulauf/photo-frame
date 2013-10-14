@@ -13,6 +13,5 @@ get '/framework_config.json' do
 end
 
 get %r{^/framework/(.+)} do |framework_file|
-  puts "here!!!"
   send_file File.join(FRAMEWORK_PATH, framework_file)
 end

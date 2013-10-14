@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "sinatra"
 gem "sinatra-jsonp"
+gem "thin"
 
 gem "sinatra-activerecord"
 gem "sqlite3"

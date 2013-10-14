@@ -1,6 +1,5 @@
 (function() {
-  var PhotoFrame,
-    _this = this;
+  var PhotoFrame;
 
   PhotoFrame = (function() {
     function PhotoFrame() {
@@ -12,16 +11,6 @@
   })();
 
   window.PhotoFrame = PhotoFrame;
-
-  $(function() {
-    window.photos = new PhotoFrame();
-    if (window.enyo && window.enyo.setFullScreen) {
-      enyo.setFullScreen(true);
-      return enyo.windows.setWindowProperties({
-        blockScreenTimeout: true
-      });
-    }
-  });
 
 }).call(this);
 (function() {

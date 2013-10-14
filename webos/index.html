@@ -8,7 +8,7 @@
     #debug-box{
       position: absolute;
       right: 0;
-      bottom: 0;
+      top: 0;
       color: #ffffff;
     }
   </style>
@@ -17,18 +17,11 @@
   <div id="app-menu"></div>
   <div id="photo-frame"></div>
   <pre id="photo-name"></pre>
-  <pre id="debug-box"></pre>
+  <div id="debug-box"></div>
 </body>
 <script type="text/javascript">
-  // var appMenu = enyo.create({ kind: "BugSweeper.Menu" });
-  // appMenu.renderInto('app-menu');
-  // $(function(){
-  //   var $d = $("#debug-box");
-  //   $d.text(
-  //     "enyo is ... " + enyo + "\n" +
-  //     "enyo.windows is ... " + enyo.windows + "\n" +
-  //     "enyo.windows.setWindowProperties is ... " + enyo.windows.setWindowProperties + "\n"
-  //   );
-  // })
+  // window.debugEnabled = true;
+  var app = enyo.create({kind: "EnyoFrame"});
+  app.renderInto('app-menu');
 </script>
 </html>
