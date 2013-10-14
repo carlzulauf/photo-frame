@@ -6,6 +6,7 @@ class PhotoFrame
     @$frame = $("#photo-frame")
     @images = new PhotoFrame.Images(this)
     @loader = new PhotoFrame.Loader(this)
+    @controls = new PhotoFrame.Controls(this)
     @loader.show()
     @images.load()
     @checkImages()

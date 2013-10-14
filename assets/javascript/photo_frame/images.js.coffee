@@ -19,6 +19,12 @@ class PhotoFrame.Images
   pause: ->
     @stopTimer()
 
+  resume: ->
+    @show()
+
+  next: ->
+    @loadNext()
+
   load: ->
     @loadImages()
 
@@ -30,14 +36,14 @@ class PhotoFrame.Images
       @images = images
       @preload()
 
-  next: ->
+  nextImage: ->
     @loadImages() if @images.length < 10
     @images.pop()
 
   preload: ->
     n = @preloadTarget - @$images.find(".image-container").length
     n.times =>
-      @$images.append @createImg(@next())
+      @$images.append @createImg(@nextImage())
 
   loadNext: ->
     $last = @$images.find(".image-container.current").first()
