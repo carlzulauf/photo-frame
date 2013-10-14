@@ -1,22 +1,26 @@
 class PhotoFrame.Images
-  constructor: () ->
+  constructor: (@app) ->
     @images = []
     @prefix = "http://carl.linkleaf.com:9292"
     @path = "/fetch/"
-    @$frame = $("#photo-frame")
-    @$name = $("#photo-name")
+    @app.$frame.append('<div class="images"></div>')
+    @$images = @app.$frame.find(".images")
     @preloadTarget = 3
-    @showName = false
-    @loadImages()
-    @$frame.click =>
-      @click()
-    window.setTimeout (=> @loadNext(); @startTimer() ), 1000
+    @interval = 16000
 
-  click: ->
-    @stopTimer()
-    @showName = true
+  show: ->
     @loadNext()
     @startTimer()
+
+  hide: ->
+    @stopTimer()
+    @$images.fadeOut()
+
+  pause: ->
+    @stopTimer()
+
+  load: ->
+    @loadImages()
 
   loadImages: ->
     $.getJSON @prefix + "/photos.json?callback=?", (data) =>
@@ -31,33 +35,26 @@ class PhotoFrame.Images
     @images.pop()
 
   preload: ->
-    n = @preloadTarget - @$frame.find("img").length
+    n = @preloadTarget - @$images.find(".image-container").length
     n.times =>
-      @$frame.append @createImg(@next())
+      @$images.append @createImg(@next())
 
   loadNext: ->
-    $last = @$frame.find("img.current").first()
-    $next = @$frame.find("img:not(.current)").first()
+    $last = @$images.find(".image-container.current").first()
+    $next = @$images.find(".image-container:not(.current)").first()
     if $last.length > 0
       $last.fadeOut {
         duration: 500,
         complete: =>
-          @showImg $next
           $last.remove()
+          @showImg $next
       }
     else if $next.length > 0
       @showImg $next
     $next
 
   showImg: ($img) ->
-    $img.fadeIn {
-      duration: 300
-    }
-    if @showName
-      @$name.fadeIn {duration: 300}
-      @showName = false
-    else
-      @$name.hide()
+    $img.fadeIn {duration: 300}
     $img.addClass("current")
     @preload()
 
@@ -66,11 +63,22 @@ class PhotoFrame.Images
     h = $(window).height()
     $img = $( document.createElement('img') )
     $img.attr("src", @prefix + @path + info.token + "?width=" + w + "&height=" + h)
-    @$name.text info.path
-    $img
+    $name = $( document.createElement('div') )
+    $name.addClass "photo-name"
+    $name.text info.path
+    $container = $( document.createElement('div') )
+    $container.addClass "image-container"
+    $container.append $name, $img
+    $container
 
   startTimer: ->
-    @timer = window.setInterval (=> @loadNext() ), 16000
+    @timer = window.setInterval (=> @loadNext() ), @interval
 
   stopTimer: ->
     window.clearInterval(@timer)
+
+  loaded: ->
+    $imgs = @$images.find("img")
+    zeroes = $imgs.filter ->
+      this.naturalHeight == 0
+    $imgs.length > 0 and zeroes.length == 0
