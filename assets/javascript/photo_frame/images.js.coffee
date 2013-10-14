@@ -1,6 +1,8 @@
 class PhotoFrame.Images
   constructor: (@app) ->
     @images = []
+    @history = []
+    @current = []
     @prefix = "http://carl.linkleaf.com:9292"
     @path = "/fetch/"
     @app.$frame.append('<div class="images"></div>')
@@ -23,7 +25,25 @@ class PhotoFrame.Images
     @show()
 
   next: ->
+    @stopTimer()
     @loadNext()
+    @startTimer()
+
+  prev: ->
+    if @history.length > 0
+      @stopTimer()
+      prev = @history.pop()
+      $prev = @createImg(prev)
+      @$images.prepend $prev
+      $cur = @$images.find(".image-container.current").first()
+      $cur.removeClass("current")
+      $cur.fadeOut {
+        duration: 500,
+        complete: =>
+          @current.unshift prev
+          @showImg $prev
+          @startTimer()
+      }
 
   load: ->
     @loadImages()
@@ -43,7 +63,9 @@ class PhotoFrame.Images
   preload: ->
     n = @preloadTarget - @$images.find(".image-container").length
     n.times =>
-      @$images.append @createImg(@nextImage())
+      data = @nextImage()
+      @current.push data
+      @$images.append @createImg(data)
 
   loadNext: ->
     $last = @$images.find(".image-container.current").first()
@@ -52,6 +74,7 @@ class PhotoFrame.Images
       $last.fadeOut {
         duration: 500,
         complete: =>
+          @addHistory @current.shift()
           $last.remove()
           @showImg $next
       }
@@ -88,3 +111,8 @@ class PhotoFrame.Images
     zeroes = $imgs.filter ->
       this.naturalHeight == 0
     $imgs.length > 0 and zeroes.length == 0
+
+  addHistory: (info) ->
+    @history.push info
+    while @history.length > 100
+      @history.shift()

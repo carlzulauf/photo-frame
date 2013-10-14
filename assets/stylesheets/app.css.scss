@@ -52,7 +52,7 @@ body {
     display: none;
     div{
       position: absolute;
-      button{
+      button, button:active, button:hover{
         border: 0;
         color: #fff;
         font-size: 3em;

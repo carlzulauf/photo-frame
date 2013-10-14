@@ -33,6 +33,8 @@ class PhotoFrame.Controls
       @show()
     @$next.click =>
       @app.images.next()
+    @$prev.click =>
+      @app.images.prev()
     @$pause.click =>
       @app.images.pause()
       @$pause.hide()
@@ -44,7 +46,7 @@ class PhotoFrame.Controls
 
   show: ->
     @$controls.fadeIn()
-    @app.$frame.find(".current .photo-name").fadeIn()
+    @app.$frame.find(".photo-name").fadeIn()
     @showTo = (new Date).getTime() + @showFor
     @fadeTimer()
 
@@ -52,6 +54,6 @@ class PhotoFrame.Controls
     time = (new Date).getTime()
     if time >= @showTo
       @$controls.fadeOut()
-      @app.$frame.find(".current .photo-name").fadeOut()
+      @app.$frame.find(".photo-name").fadeOut()
     else
       window.setTimeout (=> @fadeTimer() ), @showTo - time
