@@ -23,7 +23,7 @@ class Photo::Library
         progress.inc
         Photo.create!(
           path: file,
-          token: SecureRandom.hex(16),
+          token: Digest::MD5.hexdigest(file),
           file_size: File.size(file)
         )
       end

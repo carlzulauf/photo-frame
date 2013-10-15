@@ -21,6 +21,7 @@ class PhotoFrame
 
     get '/fetch/:token' do
       photo = Photo.where(token: params[:token]).first
+      return nil if photo.nil?
       image = Magick::Image.read(photo.path).first
       content_type image.mime_type
       image.auto_orient!
